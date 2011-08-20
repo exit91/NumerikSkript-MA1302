@@ -2,15 +2,23 @@
 \usepackage[utf8x]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage{amsmath}
-\usepackage{amsthm}
+\usepackage{amsthm}      % Theoreme, Lemmata, etc.
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{titlesec}
+\usepackage[section]{algorithm}   % Algorithmen ansprechend darstellen
+\usepackage{algorithmic}          %
+
+% Konfiguration
 
 \newtheorem{lemma}{Lemma}[section]
 \theoremstyle{definition} \newtheorem{definition}{Definition}[section]
 \theoremstyle{remark}     \newtheorem*{bemerkung}{\textbf{Bemerkung}} % unnummerierte Bemerkung
 
+\floatname{algorithm}{Algorithmus} % Eindeutschen
+\renewcommand\listalgorithmname{Algorithmenverzeichnis}
+
+
+% Metadaten
 
 \author{Stefan Feuerstein}
 \title {Einführung in die Numerik - MA 1302}
@@ -27,6 +35,10 @@ Man ist daher auf geeignete Approximationsverfahren aus der Numerik angewiesen.
 Die numerische Mathematik liefert Grundlagen zur Entwicklung von
 Simulationsalgorithmen und Aussagen über deren Qualität.
 
+
 \input{01-nicht-lineare_systeme}
+
+\pagebreak
+\listofalgorithms
 
 \end{document}
