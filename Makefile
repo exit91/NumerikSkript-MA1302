@@ -5,4 +5,5 @@ SECTIONS = 01-nicht-lineare_systeme.tex
 SOURCES = $(MAINSRC) $(SECTIONS)
 
 build/NumerikSkript-MA1302.pdf: $(SOURCES)
-	pdflatex -output-directory build/ $(SOURCES)
+	mkdir -p build
+	$(TEX) -output-directory build/ $(SOURCES)

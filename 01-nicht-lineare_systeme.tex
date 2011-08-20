@@ -61,19 +61,21 @@ $f(x_0) \cdot f(x_1) <0$. Im k-ten Schritt gilt: $|x^*-x_{k+1}|\leq
 \item[a)] In jedem Schritt wird das aktuelle Intervall halbiert. 
 \item[b)] Die Auswahl des neuen Intervalls erfolgt so, dass $x^*$ darin enthalten ist.
 \end{enumerate}
-Trotz der Konvergenzaussage findet das Verfahren in der Praxis kaum Verwendung! ($\rightarrow$ langsame Konvergenz, Systemfall)
 \end{proof}
+
+Trotz der Konvergenzaussage findet das Verfahren in der Praxis kaum Verwendung!
+($\rightarrow$ langsame Konvergenz, Systemfall)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Sekantenverfahren}
 
 Sekantengleichung durch $(x_k, f(x_k))$ und $(x_{k-1}, f(x_{k-1}))$ gegeben.
 \newline
-\\$s(x)=\frac{f(x_{k-1})}{x_{k-1}-x_k} \cdot (x-x_k)+\frac{f(x_k)}{(x_k-x_{k-1})}\cdot (x-x_{k-1})$
+$s(x)=\frac{f(x_{k-1})}{x_{k-1}-x_k} \cdot (x-x_k)+\frac{f(x_k)}{(x_k-x_{k-1})}\cdot (x-x_{k-1})$
 \newline
-\\Berechne $\tilde x$, sodass $s(\tilde x)=0$
-\begin{tabbing}
+Berechne $\tilde x$, sodass $s(\tilde x)=0$
 
+\begin{tabbing}
 \textbf{Algorithmus:} Sekantenverfahren\\
 \= \kill
 Input: Startwerte $x_0, x_1, f$\\
@@ -119,13 +121,14 @@ Dazu wird zu vorgegebenem $F$ ein $\Phi$ bestimmt, sodass aus $\Phi(x^*)=x^*
 \end{tabbing}
 
 \begin{definition} [Fixpunktiteration]
-Ausgehend von der Iterationsfunktion $\Phi$ und einem Startwert $x_0$ definiert man die Iterationsfolge $\{x_k\}_{k=0}$ durch $x_{k+1}=\Phi(x_k)$.\\
+Ausgehend von der Iterationsfunktion $\Phi$ und einem Startwert $x_0$ definiert
+man die Iterationsfolge $\{x_k\}_{k=0}$ durch $x_{k+1}=\Phi(x_k)$.
 \end{definition}
 
 \begin{lemma}[Konvergenz]
 ~ % erzwinge einen zeilenumbruch
 \begin{enumerate}
-\item[a)] Sei $\Phi$ stetig und $x_k \longmapsto x^*$, so gilt $\Phi(x^*)=x^*$\\
+\item[a)] Sei $\Phi$ stetig und $x_k \longmapsto x^*$, so gilt $\Phi(x^*)=x^*$
 \item[b)] Sei $\Phi: \Omega \longrightarrow \Omega$ \ ($\Omega$ abgeschlossen) eine Kontraktion, so konvergiert die Fixpunktiteration.
 \end{enumerate}
 \end{lemma}
@@ -173,7 +176,9 @@ falls gilt $\| x_{k+1}-x^*\|\leq C\cdot \|x_k-x^*\|^p$ und für $p=1$ wird gefor
 
 %\pagebreak
 \begin{lemma}[Superlineare Konvergenz des Sekantenverfahrens]
-Sei $f$ zweimal stetig differenzierbar und $x^*$ eine einfach Nullstelle, so konvergiert das Sekantenverfahren lokal mit $p=\frac{(1+\sqrt{5})}{2}$ (goldener Schnitt).
+Sei $f$ zweimal stetig differenzierbar und $x^*$ eine einfach Nullstelle, so
+konvergiert das Sekantenverfahren lokal mit $p=\frac{(1+\sqrt{5})}{2}$
+(goldener Schnitt).
 \end{lemma}
 
 \begin{proof}
@@ -185,7 +190,7 @@ f[x,y,z] &:= \frac{f[y,z]-f[x,y]}{z-x}
 
 Dann gilt:
 \begin{align*}
-x_{k+1}&=x_k-\frac{f(x_k)}{f[x_{k-1},x_k]}
+  x_{k+1}&=x_k-\frac{f(x_k)}{f[x_{k-1},x_k]}
 \\x_{k+1}-x^*&=(x_k-x^*)\cdot (1-\frac{f[x_k,x^*]}{f[x_{k-1},x_k]})
 \\&=\frac{(x_k-x^*)\cdot(x_{k-1}-x^*)}{f[x_{k-1},x_k]}\cdot (f[x_{k-1},x_k,x^*])
 \end{align*}
