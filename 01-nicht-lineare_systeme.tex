@@ -31,7 +31,7 @@ Verfahren.
 \begin{algorithmic}
 \STATE Input: Startwerte $x_0, x_1, f$ mit $f(x_0) \cdot f(x_1) <0$\\
 \FOR {$k = 1,2,3,...$}
-  \STATE $\mathrm{x_{k+1}}= \frac{1}{2} \cdot (x_k + x_{k-1})$
+  \STATE $x_{k+1} = \frac{1}{2} \cdot (x_k + x_{k-1})$
   \IF {$f(x_{k+1})\cdot f(x_{k-1})<0$}
     \STATE $x_k = x_{k-1}$
   \ENDIF
@@ -62,17 +62,20 @@ $f(x_0) \cdot f(x_1) <0$. Im k-ten Schritt gilt: $|x^*-x_{k+1}|\leq
 ~
 \begin{enumerate}
 \item[a)] In jedem Schritt wird das aktuelle Intervall halbiert. 
-\item[b)] Die Auswahl des neuen Intervalls erfolgt so, dass $x^*$ darin enthalten ist.
+\item[b)] Die Auswahl des neuen Intervalls erfolgt so, dass $x^*$ darin
+enthalten ist\footnote{Nach Zwischenwertsatz: Für jede stetige Funktion
+$f$ auf einem offenen Intervall $[a,b]$ gilt: $f(a)\cdot(b) < 0 \Rightarrow \exists \xi \in [a,b]$ mit $f(\xi) = 0$}.
 \end{enumerate}
 \end{proof}
 
 Trotz der Konvergenzaussage findet das Verfahren in der Praxis kaum Verwendung!
-($\rightarrow$ langsame Konvergenz, Systemfall)
+($\rightarrow$ langsame Konvergenz, Systemfall\footnote{Für den engagierten
+Leser: Wer hat eine Definition für ``Systemfall''?})
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Sekantenverfahren}
 
-Sekantengleichung durch $(x_k, f(x_k))$ und $(x_{k-1}, f(x_{k-1}))$ gegeben.
+Eine Sekantengleichung ist durch $(x_k, f(x_k))$ und $(x_{k-1}, f(x_{k-1}))$ gegeben.
 \newline
 $s(x)=\frac{f(x_{k-1})}{x_{k-1}-x_k} \cdot (x-x_k)+\frac{f(x_k)}{(x_k-x_{k-1})}\cdot (x-x_{k-1})$
 \newline
@@ -83,7 +86,7 @@ Berechne $\tilde x$, sodass $s(\tilde x)=0$
 \begin{algorithmic}
 \STATE Input: Startwerte $x_0, x_1, f$
 \FOR {$k=1,2,3...$}
-  \STATE $\mathrm{x_{k+1}}= x_k - \frac{x_k-x_{k-1}}{f(x_k)-f(x_{k-1})} \cdot f(x_k)$
+  \STATE $x_{k+1} = x_k - \frac{x_k-x_{k-1}}{f(x_k)-f(x_{k-1})} \cdot f(x_k)$
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
@@ -111,7 +114,7 @@ Einen abstrakten Rahmen liefert der Banach'sche Fixpunktsatz aus der Analysis.
 
 \noindent Sei $\Omega$ eine abgeschlossene Teilmenge des $\mathbb{R}^n$ und $\Phi: \Omega
 \longrightarrow \Omega$ eine Kontraktion, dh. $\exists \ q<1: \| \Phi(x) -
-\Phi(y)\| \leq q\cdot \|x-y\|$ \ \ $x,y \in \mathbb{R}^n$, so besitzt $\Phi$
+\Phi(y)\| \leq q\cdot \|x-y\|~\forall x,y \in \mathbb{R}^n$, so besitzt $\Phi$
 genau einen Fixpunkt, dh. ein $x^*$ mit $\Phi(x^*)=x^*$.  Um von dieser Aussage
 profitieren zu können, müssen wir zunächst die Problemstellung umformulieren.
 Dazu wird zu vorgegebenem $F$ ein $\Phi$ bestimmt, sodass aus $\Phi(x^*)=x^*
@@ -126,7 +129,9 @@ Dazu wird zu vorgegebenem $F$ ein $\Phi$ bestimmt, sodass aus $\Phi(x^*)=x^*
 
 \begin{definition} [Fixpunktiteration]
 Ausgehend von der Iterationsfunktion $\Phi$ und einem Startwert $x_0$ definiert
-man die Iterationsfolge $\{x_k\}_{k=0}$ durch $x_{k+1}=\Phi(x_k)$.
+man die Iterationsfolge\footnote{Notation: In dieser Vorlesung entspricht
+$\{a_n\}_{n=1}$ der aus der Analysis 1 bekannten Notation $(a_n)_{n\geq 1}$}
+$\{x_k\}_{k=0}$ durch $x_{k+1}=\Phi(x_k)$.
 \end{definition}
 
 \begin{lemma}[Konvergenz]
@@ -141,25 +146,33 @@ man die Iterationsfolge $\{x_k\}_{k=0}$ durch $x_{k+1}=\Phi(x_k)$.
 ~
 \begin{enumerate}
 \item[a)] $x^*=\lim_{k \to \infty}x_k=\lim_{k \to \infty}\Phi(x_{k-1})=\Phi(\lim_{k \to \infty}x_{k-1})=\Phi(x^*)$
-\item[b)]
-\begin{align*}
+\item[b)] % TODO, alignment  stimmt vorne und hinten nicht ^^
+$\left\{\begin{aligned}
 \|x_{k+1}-x_k\| = \|\Phi(x_k)-\Phi(x_{k-1})\| &\leq q\cdot \|x_k-x_{k-1}\| \\
                                               &\leq q^2\cdot \|x_{k-1}-x_{k-2}\| \\
                                    \leq \cdots&\leq q^k\cdot \|x_1-x_0\|
-\end{align*}
+\end{aligned}\right.$
 \end{enumerate}
 
 Daraus folgt, dass $\{x_k\}$ eine Cauchyfolge ist, da
-\\$\|x_{k+m}-x_k\|\leq \underbrace{\|x_{k+m}-x_{k+m-1}\|}+\underbrace{\|x_{k+m-1}-x_{k+m-2}\|}+\cdots +\underbrace{\|x_{k+1}-x_k\|}$
-\\\hspace*{21mm}$\leq q^{k+m-1}\cdot \|x_1-x_0\|$\hspace*{3mm}$\leq q^{k+m-2}\cdot \|x_1-x_0\|$ \ $\cdots \ \leq q^k\cdot \|x_1-x_0\|$\\
-\\\hspace*{21mm}$\leq q^k\|x_1-x_0\| \cdot (1+q+q^2+\cdots +q^{m-1})$\\
-\\\hspace*{21mm}$\leq q^k\|x_1-x_0\| \cdot \frac{1}{1-q}$ \ (geometrische Reihe!)
-\newline
-\\Da $\Omega$ abgeschlossen, konvergiert $x_k$ gegen $x^* \in \Omega$.\\
+\begin{align*}
+\|x_{k+m}-x_k\|&\leq \underbrace{\|x_{k+m}-x_{k+m-1}\|}_{\leq q^{k+m-1}\cdot \|x_1-x_0\|}
+                  +\underbrace{\|x_{k+m-1}-x_{k+m-2}\|}_{\leq q^{k+m-2}\cdot \|x_1-x_0\|}
+                  +\cdots
+                  +\underbrace{\|x_{k+1}-x_k\|}_{\leq q^k\cdot \|x_1-x_0\|} \\
+               &\leq q^k\|x_1-x_0\| \cdot (1+q+q^2+\cdots +q^{m-1})\\
+               &\leq q^k\|x_1-x_0\| \cdot \frac{1}{1-q} \quad \mbox{(geometrische Reihe!)}
+\end{align*}
+
+Da $\Omega$ abgeschlossen, konvergiert $x_k$ gegen $x^* \in \Omega$.
 \end{proof}
 
-\textbf{Beispiel:} Sekantenverfahren
-\\\hspace*{8mm}$\Phi(y)=\begin{pmatrix} y_2 \\ y_2-\frac{y_2-y_1}{f(y_2)-f(y_1)}\cdot f(y_2)\end{pmatrix} \ \ y\in \mathbb{R}^2$\\
+\noindent\textbf{Beispiel:} Sekantenverfahren im $\mathbb R^2$ \\\newline
+$\Phi(y)=
+\begin{pmatrix}
+y_2 \\
+y_2-\frac{y_2-y_1}{f(y_2)-f(y_1)}\cdot f(y_2)
+\end{pmatrix}, \quad y\in \mathbb{R}^2$\\
 \newline
 
 \begin{definition}[Konvergenzordnung]
@@ -167,21 +180,25 @@ Daraus folgt, dass $\{x_k\}$ eine Cauchyfolge ist, da
 \begin{enumerate}
 \item Eine Folge $\{x_k \}_{k\in\mathbb{N}}$ heißt konvergent von der Ordnung $p\geq 1$ gegen $x^*$,
 falls gilt $\| x_{k+1}-x^*\|\leq C\cdot \|x_k-x^*\|^p$ und für $p=1$ wird gefordert, dass $C<1$ gilt.
-($p=1$ linear konvergent, $p=2$ quadratisch konvergent $\cdots$)
+(``linear konvergent'' bezeichnet den Fall $p=1$, ``quadratisch konvergent'' den Fall
+$p=2$, \ldots) % verwende \ldots statt $\cdots$ wegen Text-Alignment (l = low, c = center)
 \item Der Fall $\lim_{k \to \infty}\frac{\|x_{k+1}-x^*\|}{\|x_k -x^*\|}=0$ heißt superlineare Konvergenz.
 \item Eine Fixpunktiteration heißt
   \begin{enumerate}
   \item lokal konvergent von der Ordnung $p$, falls eine offene Umgebung $U$ von $x^*$ existiert,
-        sodass $\forall \ x_0\in U$ \ $1_)$ erfüllt ist.
-  \item global konvergent von der Ordnung $p$, falls $1_)$ $\forall \ x_0\in \Omega$ erfüllt ist.
+        sodass jede Iterationsfolge $\{x_k\}_{k=0}$ mit $x_0\in U$ konvergent
+        von der Ordnung $p$ gegen $x^*$ ist.
+  \item global konvergent von der Ordnung $p$, falls für jede Iterationsfolge
+        $\{x_k\}_{k=0}$ mit $x_0\in \Omega$ konvergent von der Ordnung $p$
+ist.\footnote{Frage: Muss in dieser Definition $x^*$ für jedes $x_0$ gleich sein?} %TODO
   \end{enumerate}
 \end{enumerate}
 \end{definition}
 
 %\pagebreak
 \begin{lemma}[Superlineare Konvergenz des Sekantenverfahrens]
-Sei $f$ zweimal stetig differenzierbar und $x^*$ eine einfach Nullstelle, so
-konvergiert das Sekantenverfahren lokal mit $p=\frac{(1+\sqrt{5})}{2}$
+Sei $f$ zweimal stetig differenzierbar und $x^*$ eine einfache Nullstelle, so
+konvergiert das Sekantenverfahren lokal mit $p=\frac{1+\sqrt{5}}{2}$
 (goldener Schnitt).
 \end{lemma}
 
@@ -192,10 +209,12 @@ f[x,y]   &:= \frac{f(y)-f(x)}{y-x} \\
 f[x,y,z] &:= \frac{f[y,z]-f[x,y]}{z-x}
 \end{align*}
 
-Dann gilt:
+Dann gilt\footnote{Diese Berechnung wurde um einige Zwischenschritte erweitert,
+was hoffentlich nicht stört} (mit $-f(x_k) = f(x^*)-f(x_k) = (x^*-x_k)\cdot f[x_k,x^*]$):
 \begin{align*}
-  x_{k+1}&=x_k-\frac{f(x_k)}{f[x_{k-1},x_k]}
-\\x_{k+1}-x^*&=(x_k-x^*)\cdot (1-\frac{f[x_k,x^*]}{f[x_{k-1},x_k]})
+  x_{k+1}&=x_k-\frac{f(x_k)}{f[x_{k-1},x_k]} = x_k + (x^*-x_k)\frac{f[x_k,x^*]}{f[x_{k-1},x_k]}
+\\x_{k+1}-x^*& = (x_k - x^*) - (x_k-x^*)\frac{f[x_k,x^*]}{f[x_{k-1},x_k]} =
+(x_k-x^*)\cdot (1-\frac{f[x_k,x^*]}{f[x_{k-1},x_k]})
 \\&=\frac{(x_k-x^*)\cdot(x_{k-1}-x^*)}{f[x_{k-1},x_k]}\cdot (f[x_{k-1},x_k,x^*])
 \end{align*}
 
@@ -207,15 +226,17 @@ f[x_{k-1},x_k,x^*] =\frac{1}{2}\cdot f''(\xi_k), \ \xi_k\in [\min(x_k,x_{k-1},x^
 
 Weiterhin gilt $f'(x^*)\neq 0$ und somit existiert ein $\varepsilon > 0$ und ein $M<\infty$ mit
 \[ % alleinstehende formel
-  \left| \frac{f''(\xi}{2\cdot f'(\eta)} \right|<M \ \ \forall \ \xi,\eta\in [x^*-\varepsilon,x^*+\varepsilon]=\overline{W}
+  \left| \frac{f''(\xi)}{2\cdot f'(\eta)} \right|<M \ \ \forall \ \xi,\eta\in
+[x^*-\varepsilon,x^*+\varepsilon]=:\overline{W}
 \]
 
-Sei nun $\delta:= \min (\frac{1}{M},\varepsilon)$ und $U:=(x^*-\delta,x^*+\delta)\subset \overline{W}$
+Sei nun $\delta:= \min (\frac{1}{M},\varepsilon)$ und
+$U:=(x^*-\delta,x^*+\delta)\subset \overline{W}$.
 Seien $x_0, x_1\in U$ und $e_k:=M\cdot \|x_k-x^*\|$, so gilt:
 \begin{align}
-e_k< \min(1,\varepsilon \cdot M)  & \mbox{ für } k>0 \label{eq:prop1}\\
-x_k\in U                          & \mbox{ für } k>0 \label{eq:prop2}\\
-e_k\leq e_{k-1}\cdot e_{k-2}      & \mbox{ für } k>2 \label{eq:prop3}
+e_k< \min(1,\varepsilon \cdot M)  & \mbox{ für } k\geq 0 \label{eq:prop1}\\ % TODO: >= oder > ?
+x_k\in U                          & \mbox{ für } k\geq 0 \label{eq:prop2}\\ %
+e_k\leq e_{k-1}\cdot e_{k-2}      & \mbox{ für } k\geq 2 \label{eq:prop3}   %
 \end{align}
 
 Für $k=0,1$ \checkmark\newline
@@ -229,10 +250,13 @@ Induktiv erhält man, falls $x_{k-2},x_{k-1}\in U$, dass
   \|x_k-x^*\|=\frac{e_k}{M}<\min(\frac{1}{M},\varepsilon)=\delta\Rightarrow
 x_k\in U\Rightarrow \mbox{ \eqref{eq:prop2} }
 \]
-Da $e_0,e_1<1$ gilt $L:=\max(e_0,e_1^\frac{1}{p})<1$. Mehr noch: $e_0\leq L$,
-$e_1\leq L^p$. Induktiv ergibt sich daraus $e_k\leq L^{p^k}$ für $k>0$,
-da
+Da $e_0,e_1<1$ gilt $L:=\max(e_0,e_1^{1/p})<1$. Mehr noch: $e_0\leq L$,
+$e_1\leq L^p$. Induktiv ergibt sich daraus $e_k\leq L^{p^k}$ für $k\geq 0$, % TODO: >= oder > ?
+da\marginpar{Eigenschaft des goldenen Schnitts: $1+p = p^2$}
 \[
-  e_k\leq e_{k-1}\cdot e_{k-2}\leq L^{p^{k-1}}\cdot L^{p^{k-2}}=L^{p^{k-2}\cdot (1+p)}=L^{p^k}\Rightarrow e_k\leq (L^{p^{k-1}})^p
+  e_k\leq e_{k-1}\cdot e_{k-2}\leq L^{p^{k-1}}\cdot L^{p^{k-2}}=L^{p^{k-2}\cdot
+(1+p)} = L^{p^k}
+\]\[
+  \Rightarrow e_k\leq (L^{p^{k-1}})^p
 \]
 \end{proof}
