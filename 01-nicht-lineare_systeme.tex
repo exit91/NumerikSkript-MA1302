@@ -260,3 +260,126 @@ da\marginpar{Eigenschaft des goldenen Schnitts: $1+p = p^2$}
   \Rightarrow e_k\leq (L^{p^{k-1}})^p
 \]
 \end{proof}
+
+% Vorlesung vom 23. Aug 2011:
+
+\begin{lemma}
+\label{lem:kvg-ord}
+\noindent Sei $\Phi \in C^1(a,b)$ und $x^*\in (a,b)$ ein Fixpunkt, dann ist die Fixpunktiteration
+\begin{enumerate}
+\item[a)] lokal konvergent, falls $|\Phi'(x^*)|<1$
+\item[b)] divergent, falls $|\Phi'(x^*)|>1$
+\item[c)] lokal konvergent von der Ordnung $p$, falls
+  $\Phi\in C^p$ mit $\Phi^{(l)}(x^*)=0$ für $l=1,\ldots ,p-1$
+  und $\Phi^{(p)}(x^*)\neq 0$
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+~
+\begin{enumerate}
+\item[a)] Der Beweis erfolgt in 3 Schritten:
+\begin{enumerate}
+\item[1)] Definition einer Umgebung $\mathcal U:=(x^*-\varepsilon,x^*+\varepsilon)$,
+  wobei $\varepsilon$ so gewählt wird, dass $|\Phi'(x)|\leq\alpha<1 ~\forall x\in \mathcal U$
+\item[2)] Sei $x_0\in \mathcal U$, so gilt\footnote{Verwendet wird eine
+Taylorentwicklung mit Restgliedabschätzung(?)}:
+\begin{align*}
+x_1&=\Phi (x_0)=\underset{=x^*}{\underbrace{\Phi(x^*)}}+\Phi'(\xi)\cdot
+(x_0-x^*)\text{ mit }\xi\in \mathcal U \\
+&\Rightarrow |x_1-x^*|=\underset{< 1}{\underbrace{|\Phi'(\xi)|}}\cdot |x_0-x^*|<|x_0-x^*| \\
+&\Rightarrow x_1\in \mathcal U\Rightarrow \text{(Induktion)}\cdots\Rightarrow x_k\in \mathcal U \ \ \forall k\geq1
+\end{align*}
+\item[3)]Wegen $\alpha<1$, $\lim_{k \to\infty}{\alpha^k}=0$ folgt
+\begin{align*} |x_k-x^*|&=|\Phi(x_{k-1})-\Phi(x^*)|\leq |\Phi'(\xi_k)|\cdot |x_{k-1}-x^*| \\
+&\leq
+  \underset{k \text{ Faktoren}}{\underbrace{|\Phi'(\xi_k)|\cdot
+  |\Phi'(\xi_{k-1})|\cdots}} |x_0-x^*|\leq \alpha^k\cdot |x_0-x^*|\to 0
+\end{align*}
+\end{enumerate}
+\item[b)] analog zu a)
+\item[c)] Konvergenz folgt aus a), Ordnung folgt aus Taylorentwicklung.
+\end{enumerate}
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Newton-Verfahren}
+
+Das am häufigsten verwendete numerische Verfahren ist das Newton-Verfahren. Im
+Gegensatz zu den bisherigen Verfahren ist es nicht auf den eindimensionalen
+Raum beschränkt.
+
+\begin{algorithm}
+\caption{Allgemeines Newton-Verfahren}
+\begin{algorithmic}
+\STATE Input: Startwert $x_0, F$
+\FOR {$k=0,1,2,...$}
+  \STATE $J_F(x_k)\cdot \Delta x=F(x_k)$  \COMMENT{Löse das lineare
+                                          Gleichungssystem nach $\Delta x$}
+  \STATE $x_{k+1}=x_k-\Delta x$           \COMMENT{Korrigiere $x_k$}
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\begin{bemerkung}
+Das Verfahren ist im k-ten Schritt wohldefiniert,
+falls $\det(J_F(x_k))\neq 0$.\\ % Verwende den \det Befehl für ein besseres
+                                % Schriftbild
+Fall $n=1:$
+\begin{align*}
+\Phi(x)     &=x-\frac{f(x)}{f'(x)},\\
+\Phi'(x)    &=1-\frac{{f'(x)}^2-f''(x)\cdot f(x)}{{f'(x)}^2}\\
+            &=1-1+\frac{f''(x)\cdot f(x)}{{f'(x)}^2}\\
+            &\Rightarrow \Phi'(x^*)=0\\
+\Phi''(x)   &=\text{Dem Leser überlassen} \\
+\end{align*}
+Daraus schließen wir nach Lemma \ref{lem:kvg-ord} die quadratische Konvergenz von der Ordnung 2 im eindimensionalen
+Fall.
+\end{bemerkung}
+
+\begin{lemma}[Konvergenz des Newtonverfahrens]
+Sei $F:\Omega \longrightarrow \mathbb{R}^n$ ($\Omega$ offen und konvex)
+eine stetig differenzierbare Funktion. Die Jacobi-Matrix sei überall invertierbar
+und genüge folgender Lipschitz-Bedingung: Es existiert ein $w<\infty$ mit der Eigenschaft:
+Für alle $x\in \Omega, v\in \mathbb{R}^n \text{ mit } x+v\in \Omega \text{ und }
+s\in [0,1]$ gilt:
+\[
+\|{J_F(x)}^{-1}\cdot (J_F(x+s\cdot v)-J_F(x))\cdot v\|\leq s\cdot  w \|v\|^2 \quad
+\]
+Weiterhin sei $x^*\in \Omega$ eine einfache Nullstelle von $F$ und $\|x_0-x^*\|:=\delta<\frac{2}{ w}$, so konvergiert die durch das Newton-Verfahren erzeugte Folge $\{x_k\}_{k\in \mathbb{N}}$ mindestens quadratisch gegen $x^*$. 
+\end{lemma}
+
+\begin{proof}
+\begin{align*}
+x_{k+1}-x^*
+  &= x_k-x^*-\underset{\Delta x}{\underbrace{{J_F(x_k)}^{-1}\cdot F(x_k)}}\\
+  &= {J_F(x_k)}^{-1}\cdot (\underset{=0}{\underbrace{F(x^*)}}-F(x_k)+J_F(x_k)\cdot (x_k-x^*))\\
+  &\qquad\text{Durch Anwendung des Hauptsatzes der Integralrechnung erhalten wir: } \\
+  &\qquad F(x^*)-F(x_k) = \int_{0}^1 J_F(x_k+s\cdot (x^*-x_k))\cdot (x^*-x_k)\,ds\\
+  &\qquad \text{und setzen ein:} \\
+%
+  &= {J_F(x_k)}^{-1}\cdot ( \int_{0}^1 J_F(x_k+s\cdot (x^*-x_k))\cdot (x^*-x_k)\,ds +J_F(x_k)\cdot (x_k-x^*))\\
+%
+  &= \int_{0}^1 {J_F(x_k)}^{-1}\cdot (J_F(x_k+s\cdot(x^*-x_k))-J_F(x_k))\cdot (x^*-x_k)\,ds\\
+\Rightarrow \| x_{k+1}-x^*\|
+  & = \int_{0}^1 s\cdot  w \cdot {\| x^*-x_k\|}^2\,ds \quad\text{ \ (nach Voraussetzung mit $v=x^*-x_k$)}\\
+  &\leq w \cdot {\| x^*-x_k\|}^2\,\int_0^1s~ds \\
+&=\frac{1}{2}\cdot  w \cdot {\| x^*-x_k\|}^2
+\end{align*}
+
+\noindent Die Folgerung $\|x_1-x^*\|\leq \frac{1}{2}\cdot  w \cdot {\| x^*-x_0\|}^2<\frac{1}{2}\cdot  w
+\cdot \frac{4}{{ w}^2}=\frac{2}{ w}$ zeigt sowohl lokale quadratische
+Konvergenz sowie die Beschränktheit der Iterationsfolge(?)\footnote{Soll dies
+zeigen, dass die Folgenelemente eine gewisse Umgebung nie verlassen? Wir haben
+eine solche innerhalb dieses Beweises nie eingeführt!}.
+Durch Induktion folgt: $\|x_k-x^*\|<\frac{2}{ w}$, \ $\forall k \geq 1$.
+\end{proof}
+
+\begin{bemerkung}
+~
+\begin{enumerate}
+\item[1)] Um den lokalen Konvergenzbereich zu vergrößern, arbeitet man mit gedämpften Varianten $x_{k+1}=x_k-\lambda_k\cdot \Delta x$, \ $\lambda\in (0,1]$.
+\end{enumerate}
+
+\end{bemerkung}
